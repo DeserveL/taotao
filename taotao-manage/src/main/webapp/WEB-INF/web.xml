@@ -44,7 +44,7 @@
 
     <servlet-mapping>
         <servlet-name>taotao-manage</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 
     <!-- 解决PUT请求无法提交表单数据的问题 -->
