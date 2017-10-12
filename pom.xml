@@ -20,6 +20,8 @@
     <properties>
         <taotao.version>1.0-SNAPSHOT</taotao.version>
         <junit.version>4.12</junit.version>
+        <lombok.version>1.16.6</lombok.version>
+        <servlet-api.version>3.0.1</servlet-api.version>
         <spring.version>4.2.4.RELEASE</spring.version>
         <mysql.version>5.1.34</mysql.version>
         <mybatis.version>3.2.6</mybatis.version>
@@ -70,6 +72,22 @@
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
                 <scope>test</scope>
+            </dependency>
+
+            <!-- servlet-api -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${servlet-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- provided -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!--spring-->
@@ -173,6 +191,10 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 

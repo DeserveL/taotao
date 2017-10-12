@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
+    <!--  参考配置网址  http://blog.csdn.net/isea533/article/details/42102297-->
+
     <!--导入属性配置 -->
     <properties resource="jdbc.properties"></properties>
     <!--指定特定数据库的jdbc驱动jar包的位置 -->
@@ -22,30 +24,32 @@
         </javaTypeResolver>
 
         <!-- 生成model模型，对应的包，存放位置可以指定具体的路径,如/ProjectName/src，也可以使用MAVEN来自动生成 .. -->
-        <!-- Model模型生成器,用来生成含有主键key的类，记录类 以及查询Example类 targetPackage 指定生成的model生成所在的包名 targetProject 指定在该项目下所在的路径 -->
-        <javaModelGenerator targetPackage="com.deservel.taotao.pojo" targetProject="../taotao-model/src/main/java">
-            <!-- 是否对model添加 构造函数 -->
+        <!-- Model模型生成器,用来生成含有主键key的类，记录类 以及查询Example类 targetPackage 生成实体类存放的包名，一般就是放在该包下 targetProject 指定在该项目下所在的路径,可以是绝对路径或相对路径（如 targetProject="src/main/java"） -->
+        <javaModelGenerator targetPackage="com.deservel.taotao.model.po" targetProject="../taotao-model/src/main/java">
+            <!-- 该属性只对MyBatis3有效，如果true就会使用构造方法入参，如果false就会使用setter方式。默认为false。 -->
             <property name="constructorBased" value="true"/>
-            <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
+            <!-- 如果true，MBG会根据catalog和schema来生成子包。如果false就会直接用targetPackage属性。默认为false。 -->
             <property name="enableSubPackages" value="false"/>
-            <!-- 建立的Model对象是否 不可改变 即生成的Model对象不会有 setter方法，只有构造方法 -->
-            <property name="immutable" value="true"/>
-            <!-- 给Model添加一个父类 -->
-            <property name="rootClass" value="com.deservel.taotao.pojo.BaseModel"/>
-            <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
+            <!-- 该属性用来配置实体类属性是否可变，如果设置为true，那么constructorBased不管设置成什么，都会使用构造方法入参，并且不会生成setter方法。如果为false，实体类属性就可以改变。默认为false。 -->
+            <property name="immutable" value="false"/>
+            <!-- 设置所有实体类的基类。如果设置，需要使用类的全限定名称。并且如果MBG能够加载rootClass，那么MBG不会覆盖和父类中完全匹配的属性。匹配规则： -->
+            <property name="rootClass" value="com.deservel.taotao.model.po.BasePO"/>
+            <!-- 是否对数据库查询结果进行trim操作，如果设置为true就会生成类似这样public void setUsername(String username) {this.username = username == null ? null : username.trim();}的setter方法。默认值为false。 -->
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <!--对应的xml mapper文件 ..  -->
         <!--Mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
         <sqlMapGenerator targetPackage="com.deservel.taotao.dao" targetProject="src/main/resources">
+            <!--如果true，MBG会根据catalog和schema来生成子包。如果false就会直接用targetPackage属性。默认为false。-->
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
         <!-- 对应的dao接口 .. -->
         <!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码 type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象 type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象 type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口 -->
         <javaClientGenerator targetPackage="com.deservel.taotao.dao" targetProject="src/main/java" type="MIXEDMAPPER">
-            <property name="enableSubPackages" value=""/>
+            <!--如果true，MBG会根据catalog和schema来生成子包。如果false就会直接用targetPackage属性。默认为false。-->
+            <property name="enableSubPackages" value="false"/>
             <!-- 定义Maper.java 源代码中的ByExample() 方法的可视性，可选的值有： public; private; protected; default 注意：如果 targetRuntime="MyBatis3",此参数被忽略 -->
             <property name="exampleMethodVisibility" value=""/>
             <!-- 方法名计数器 Important note: this property is ignored if the target runtime is MyBatis3. -->
@@ -55,14 +59,6 @@
         </javaClientGenerator>
 
         <!-- 这里是数据库的表名table_user 以及 POJO类的名字User .. -->
-        <!--<table tableName="lession" schema="louis">-->
-            <!--&lt;!&ndash; optional , only for mybatis3 runtime 自动生成的键值（identity,或者序列值） 如果指定此元素，MBG将会生成<selectKey>元素，然后将此元素插入到SQL Map的<insert> 元素之中 sqlStatement 的语句将会返回新的值 如果是一个自增主键的话，你可以使用预定义的语句,或者添加自定义的SQL语句. 预定义的值如下: Cloudscape This will translate to: VALUES IDENTITY_VAL_LOCAL() DB2: VALUES IDENTITY_VAL_LOCAL() DB2_MF: SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1 Derby: VALUES IDENTITY_VAL_LOCAL() HSQLDB: CALL IDENTITY() Informix: select dbinfo('sqlca.sqlerrd1') from systables where tabid=1 MySql: SELECT LAST_INSERT_ID() SqlServer: SELECT SCOPE_IDENTITY() SYBASE: SELECT @@IDENTITY JDBC: This will configure MBG to generate code for MyBatis3 suport of JDBC standard generated keys. This is a database independent method of obtaining the value from identity columns. identity: 自增主键 If true, then the column is flagged as an identity column and the generated <selectKey> element will be placed after the insert (for an identity column). If false, then the generated <selectKey> will be placed before the insert (typically for a sequence). &ndash;&gt;-->
-            <!--<generatedKey column="" sqlStatement="" identity="" type=""/>-->
-            <!--&lt;!&ndash; optional. 列的命名规则： MBG使用 <columnRenamingRule> 元素在计算列名的对应 名称之前，先对列名进行重命名， 作用：一般需要对BUSI_CLIENT_NO 前的BUSI_进行过滤 支持正在表达式 searchString 表示要被换掉的字符串 replaceString 则是要换成的字符串，默认情况下为空字符串，可选 &ndash;&gt; <columnRenamingRule searchString="" replaceString=""/> &lt;!&ndash; optional.告诉 MBG 忽略某一列 column，需要忽略的列 delimitedColumnName:true ,匹配column的值和数据库列的名称 大小写完全匹配，false 忽略大小写匹配 是否限定表的列名，即固定表列在Model中的名称 &ndash;&gt;-->
-            <!--<ignoreColumn column="PLAN_ID" delimitedColumnName="true" />-->
-            <!--&lt;!&ndash;optional.覆盖MBG对Model 的生成规则 column: 数据库的列名 javaType: 对应的Java数据类型的完全限定名 在必要的时候可以覆盖由JavaTypeResolver计算得到的java数据类型. For some databases, this is necessary to handle "odd" database types (e.g. MySql's unsigned bigint type should be mapped to java.lang.Object). jdbcType:该列的JDBC数据类型(INTEGER, DECIMAL, NUMERIC, VARCHAR, etc.)，该列可以覆盖由JavaTypeResolver计算得到的Jdbc类型，对某些数据库而言，对于处理特定的JDBC 驱动癖好 很有必要(e.g. DB2's LONGVARCHAR type should be mapped to VARCHAR for iBATIS). typeHandler: &ndash;&gt;-->
-            <!--<columnOverride column="" javaType="" jdbcType="" typeHandler="" delimitedColumnName="" />-->
-        <!--</table>-->
         <table tableName="tb_item_cat" domainObjectName="TbItemCat"
                enableCountByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false">
         </table>

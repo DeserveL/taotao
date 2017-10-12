@@ -1,6 +1,6 @@
 package com.deservel.taotao.dao;
 
-import com.deservel.taotao.pojo.TbItemCat;
+import com.deservel.taotao.model.po.TbItemCat;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.ResultMap;

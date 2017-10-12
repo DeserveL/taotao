@@ -13,26 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.deservel.taotao.service;
+package com.deservel.taotao.model.po;
 
-import com.deservel.taotao.dao.TbItemCatMapper;
-import com.deservel.taotao.model.po.TbItemCat;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Date;
 
 /**
  * @author DeserveL
- * @date 2017/2/6 13:37
+ * @date 2017/10/12 15:08
  * @since 1.0.0
  */
-public class catDaoTest extends AbstractSpringContextTest{
+public abstract class BasePO {
+    private Date createTime;
 
-    @Autowired
-    private TbItemCatMapper tbItemCatMapper;
+    private Date updateTime;
 
-    @Test
-    public void test(){
-        TbItemCat a=tbItemCatMapper.selectByPrimaryKey((long) 1);
-        System.out.println(a);
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
