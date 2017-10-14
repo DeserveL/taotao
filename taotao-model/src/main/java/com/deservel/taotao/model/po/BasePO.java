@@ -15,6 +15,8 @@
  */
 package com.deservel.taotao.model.po;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
@@ -22,24 +24,9 @@ import java.util.Date;
  * @date 2017/10/12 15:08
  * @since 1.0.0
  */
+@Data
 public abstract class BasePO {
-    private Date createTime;
+    private Date created;
 
-    private Date updateTime;
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+    private Date updated;
 }

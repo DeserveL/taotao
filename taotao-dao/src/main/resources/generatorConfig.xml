@@ -9,8 +9,16 @@
     <classPathEntry location="${driverPath}"/>
     <context id="default" targetRuntime="MyBatis3">
 
+        <!-- 指定生成的java文件的编码,没有直接生成到项目时中文可能会乱码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+
         <!-- optional，旨在创建class时，对注释进行控制 -->
-        <commentGenerator>
+        <!--该元素有一个可选属性type,可以指定用户的实现类，该类需要实现org.mybatis.generator.api.CommentGenerator接口。而且必有一个默认的构造方法。
+        这个属性接收默认的特殊值DEFAULT，会使用默认的实现类org.mybatis.generator.internal.DefaultCommentGenerator。-->
+        <commentGenerator type="com.deservel.taotao.common.generator.MyCommentGenerator">
+            <!-- suppressAllComments:**阻止**生成注释，默认为false -->
+            <property name="suppressAllComments" value="false"/>
+            <!-- suppressDate:**阻止**生成的注释包含时间戳，默认为false -->
             <property name="suppressDate" value="true" />
         </commentGenerator>
 
@@ -27,7 +35,7 @@
         <!-- Model模型生成器,用来生成含有主键key的类，记录类 以及查询Example类 targetPackage 生成实体类存放的包名，一般就是放在该包下 targetProject 指定在该项目下所在的路径,可以是绝对路径或相对路径（如 targetProject="src/main/java"） -->
         <javaModelGenerator targetPackage="com.deservel.taotao.model.po" targetProject="../taotao-model/src/main/java">
             <!-- 该属性只对MyBatis3有效，如果true就会使用构造方法入参，如果false就会使用setter方式。默认为false。 -->
-            <property name="constructorBased" value="true"/>
+            <property name="constructorBased" value="false"/>
             <!-- 如果true，MBG会根据catalog和schema来生成子包。如果false就会直接用targetPackage属性。默认为false。 -->
             <property name="enableSubPackages" value="false"/>
             <!-- 该属性用来配置实体类属性是否可变，如果设置为true，那么constructorBased不管设置成什么，都会使用构造方法入参，并且不会生成setter方法。如果为false，实体类属性就可以改变。默认为false。 -->
