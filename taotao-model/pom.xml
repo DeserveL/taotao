@@ -14,10 +14,10 @@
 
     <dependencies>
 
-        <!-- 通用mapper -->
+        <!-- JPA注解依赖 -->
         <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper</artifactId>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
         </dependency>
     </dependencies>
 </project>

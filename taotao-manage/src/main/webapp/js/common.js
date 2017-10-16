@@ -117,6 +117,7 @@ var TT = TAOTAO = {
     			    	var _win = this;
     			    	$("ul",_win).tree({
     			    		url:'/rest/item/cat/list',
+							method:'get',
     			    		animate:true,
     			    		onClick : function(node){
     			    			if($(this).tree("isLeaf",node.target)){

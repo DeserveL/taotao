@@ -2,11 +2,12 @@ package com.deservel.taotao.model.po;
 
 import lombok.Data;
 
+import java.util.Date;
 import javax.persistence.*;
 
 @Data
 @Table(name = "tb_item_cat")
-public class TbItemCat extends BasePO {
+public class TbItemCat{
     /**
      * 类目ID
      */
@@ -41,4 +42,14 @@ public class TbItemCat extends BasePO {
      */
     @Column(name = "is_parent")
     private Boolean isParent;
+
+    /**
+     * 创建时间
+     */
+    private Date created;
+
+    /**
+     * 创建时间
+     */
+    private Date updated;
 }

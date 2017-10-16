@@ -12,9 +12,7 @@
         <!--jdbc的数据库连接 -->
         <jdbcConnection driverClass="${driverClassName}" connectionURL="${jdbcUrl}" userId="${jdbcUsername}" password="${jdbcPassword}">
         </jdbcConnection>
-        <javaModelGenerator targetPackage="com.deservel.taotao.model.po" targetProject="../taotao-model/src/main/java">
-            <property name="rootClass" value="com.deservel.taotao.model.po.BasePO"/>
-        </javaModelGenerator>
+        <javaModelGenerator targetPackage="com.deservel.taotao.model.po" targetProject="../taotao-model/src/main/java"/>
         <sqlMapGenerator targetPackage="com.deservel.taotao.dao" targetProject="src/main/resources"/>
         <javaClientGenerator targetPackage="com.deservel.taotao.dao" targetProject="src/main/java"
                              type="XMLMAPPER"/>

@@ -18,6 +18,7 @@ package com.deservel.taotao.service;
 import com.deservel.taotao.dao.TbItemCatMapper;
 import com.deservel.taotao.model.po.TbItemCat;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,6 +38,8 @@ public class catDaoTest extends AbstractSpringContextTest{
     public void test(){
         PageHelper.offsetPage(1,2);
         List<TbItemCat> tbItemCats = tbItemCatMapper.selectAll();
+        PageInfo<TbItemCat> tbItemCatPageInfo = new PageInfo<>(tbItemCats);
         System.out.println(tbItemCats);
+        System.out.println(tbItemCatPageInfo);
     }
 }

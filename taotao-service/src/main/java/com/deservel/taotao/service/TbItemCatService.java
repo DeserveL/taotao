@@ -13,20 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.deservel.taotao.model.po;
+package com.deservel.taotao.service;
 
-import lombok.Data;
+import com.deservel.taotao.model.vo.TbItemCatVO;
 
-import java.util.Date;
+import java.util.List;
 
 /**
+ * 商品分类
+ *
  * @author DeserveL
- * @date 2017/10/12 15:08
+ * @date 2017/10/16 16:35
  * @since 1.0.0
  */
-@Data
-public abstract class BasePO {
-    private Date created;
+public interface TbItemCatService {
 
-    private Date updated;
+    List<TbItemCatVO> queryItemCat(Long parentId);
+
 }
