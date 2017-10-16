@@ -17,8 +17,11 @@ package com.deservel.taotao.service;
 
 import com.deservel.taotao.dao.TbItemCatMapper;
 import com.deservel.taotao.model.po.TbItemCat;
+import com.github.pagehelper.PageHelper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * @author DeserveL
@@ -32,7 +35,8 @@ public class catDaoTest extends AbstractSpringContextTest{
 
     @Test
     public void test(){
-        TbItemCat a=tbItemCatMapper.selectByPrimaryKey((long) 1);
-        System.out.println(a);
+        PageHelper.offsetPage(1,2);
+        List<TbItemCat> tbItemCats = tbItemCatMapper.selectAll();
+        System.out.println(tbItemCats);
     }
 }

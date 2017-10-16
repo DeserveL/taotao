@@ -11,24 +11,53 @@
     <!-- 定义数据源-->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${driverClassName}"/>
-        <property name="url" value="${jdbcUrl}" />
-        <property name="username" value="${jdbcUsername}" />
-        <property name="password" value="${jdbcPassword}" />
+        <property name="url" value="${jdbcUrl}"/>
+        <property name="username" value="${jdbcUsername}"/>
+        <property name="password" value="${jdbcPassword}"/>
 
-        <property name="maxActive" value="${maxActive}" />
-        <property name="initialSize" value="${initialSize}" />
-        <property name="maxWait" value="${maxWait}" />
-        <property name="minIdle" value="${minIdle}" />
+        <property name="maxActive" value="${maxActive}"/>
+        <property name="initialSize" value="${initialSize}"/>
+        <property name="maxWait" value="${maxWait}"/>
+        <property name="minIdle" value="${minIdle}"/>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="mapperLocations"  value="classpath:com/deservel/taotao/dao/*.xml" />
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:com/deservel/taotao/dao/*.xml"/>
+        <property name="plugins">
+            <array>
+                <!-- 分页助手 https://github.com/pagehelper/Mybatis-PageHelper-->
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>
+                            helperDialect=mysql
+                            reasonable=true
+                            supportMethodsArguments=true
+                            params=count=countSql
+                            autoRuntimeDialect=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.deservel.taotao.dao" />
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    <!-- 集成通用mapper https://github.com/abel533/Mapper-->
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.deservel.taotao.dao"/>
+        <!-- 3.2.2版本新特性，markerInterface可以起到mappers配置的作用，详细情况需要看Marker接口类 -->
+        <!--<property name="markerInterface" value="com.isea533.mybatis.util.MyMapper"/>-->
+        <property name="properties">
+            <value>
+                IDENTITY=mysql
+            </value>
+        </property>
     </bean>
+
+    <!-- 原始mybatis -->
+    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+        <!--<property name="basePackage" value="com.deservel.taotao.dao"/>-->
+        <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>-->
+    <!--</bean>-->
 
 </beans>
