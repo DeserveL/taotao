@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.deservel.taotao.service.Impl;
+package com.deservel.taotao.service.impl;
 
-import com.deservel.taotao.dao.TbItemCatMapper;
 import com.deservel.taotao.model.po.TbItemCat;
 import com.deservel.taotao.model.vo.TbItemCatVO;
+import com.deservel.taotao.service.AbstractBaseService;
 import com.deservel.taotao.service.TbItemCatService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,10 +30,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Service
-public class TbItemCatServiceImpl implements TbItemCatService {
-
-    @Autowired
-    TbItemCatMapper tbItemCatMapper;
+public class TbItemCatServiceImpl extends AbstractBaseService<TbItemCat> implements TbItemCatService{
 
     @Override
     public List<TbItemCatVO> queryItemCat(Long parentId) {
@@ -43,7 +39,7 @@ public class TbItemCatServiceImpl implements TbItemCatService {
 
         TbItemCat tbItemCat = new TbItemCat();
         tbItemCat.setParentId(parentId);
-        List<TbItemCat> select = tbItemCatMapper.select(tbItemCat);
+        List<TbItemCat> select = this.queryListByWhere(tbItemCat);
         if (null != select) {
             for (TbItemCat itemCat : select) {
                 TbItemCatVO tbItemCatVO = new TbItemCatVO();

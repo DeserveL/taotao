@@ -5,6 +5,13 @@ import lombok.Data;
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 商品分类实体类
+ *
+ * @author DeserveL
+ * @date 2017/10/17 0017 下午 21:17
+ * @since 1.0.0
+ */
 @Data
 @Table(name = "tb_item_cat")
 public class TbItemCat{

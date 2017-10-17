@@ -28,6 +28,12 @@ import java.util.List;
  */
 public interface TbItemCatService {
 
+    /**
+     * 查询商品分类
+     *
+     * @param parentId
+     * @return
+     */
     List<TbItemCatVO> queryItemCat(Long parentId);
 
 }
