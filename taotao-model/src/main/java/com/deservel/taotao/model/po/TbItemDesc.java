@@ -5,6 +5,9 @@ import lombok.Data;
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * @author Deservel
+ */
 @Data
 @Table(name = "tb_item_desc")
 public class TbItemDesc {
