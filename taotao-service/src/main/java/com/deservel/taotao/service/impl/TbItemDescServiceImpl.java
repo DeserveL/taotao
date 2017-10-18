@@ -13,28 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.deservel.taotao.service;
+package com.deservel.taotao.service.impl;
 
-import com.deservel.taotao.model.po.TbItemCat;
-import com.deservel.taotao.model.vo.TbItemCatVO;
-
-import java.util.List;
+import com.deservel.taotao.model.po.TbItemDesc;
+import com.deservel.taotao.service.AbstractBaseService;
+import com.deservel.taotao.service.TbItemDescService;
+import org.springframework.stereotype.Service;
 
 /**
- * 商品分类
- *
  * @author DeserveL
- * @date 2017/10/16 16:35
+ * @date 2017/10/18 17:02
  * @since 1.0.0
  */
-public interface TbItemCatService extends BaseService<TbItemCat>{
-
-    /**
-     * 查询商品分类
-     *
-     * @param parentId
-     * @return
-     */
-    List<TbItemCatVO> queryItemCat(Long parentId);
-
+@Service
+public class TbItemDescServiceImpl extends AbstractBaseService<TbItemDesc> implements TbItemDescService{
 }

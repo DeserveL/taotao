@@ -17,7 +17,6 @@ package com.deservel.taotao.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.omg.CORBA.Object;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.entity.Example;
@@ -53,6 +52,7 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
      * @param id
      * @return
      */
+    @Override
     public T queryById(Long id) {
         return this.mapper.selectByPrimaryKey(id);
     }
@@ -62,6 +62,7 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
      *
      * @return
      */
+    @Override
     public List<T> queryAll() {
         return this.mapper.select(null);
     }
@@ -72,6 +73,7 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
      * @param record
      * @return
      */
+    @Override
     public T queryOne(T record) {
         return this.mapper.selectOne(record);
     }
@@ -82,6 +84,7 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
      * @param record
      * @return
      */
+    @Override
     public List<T> queryListByWhere(T record) {
         return this.mapper.select(record);
     }
@@ -94,6 +97,7 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
      * @param record
      * @return
      */
+    @Override
     public PageInfo<T> queryPageListByWhere(Integer page, Integer rows, T record) {
         // 设置分页条件
         PageHelper.startPage(page, rows);
@@ -107,6 +111,7 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
      * @param record
      * @return
      */
+    @Override
     public Integer save(T record) {
         return this.mapper.insert(record);
     }
@@ -117,6 +122,7 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
      * @param record
      * @return
      */
+    @Override
     public Integer saveSelective(T record) {
         return this.mapper.insertSelective(record);
     }
@@ -127,6 +133,7 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
      * @param record
      * @return
      */
+    @Override
     public Integer update(T record) {
         return this.mapper.updateByPrimaryKey(record);
     }
@@ -137,6 +144,7 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
      * @param record
      * @return
      */
+    @Override
     public Integer updateSelective(T record) {
         return this.mapper.updateByPrimaryKeySelective(record);
     }
@@ -147,6 +155,7 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
      * @param id
      * @return
      */
+    @Override
     public Integer deleteById(Long id) {
         return this.mapper.deleteByPrimaryKey(id);
     }
@@ -158,6 +167,7 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
      * @param values
      * @return
      */
+    @Override
     public Integer deleteByIds(String property, List<Object> values) {
         Example example = new Example(modelClass);
         example.createCriteria().andIn(property, values);
@@ -170,6 +180,7 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
      * @param record
      * @return
      */
+    @Override
     public Integer deleteByWhere(T record) {
         return this.mapper.delete(record);
     }

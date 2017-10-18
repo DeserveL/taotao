@@ -35,7 +35,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("item/cat")
-public class ItemCatController {
+public class TbItemCatController {
 
     @Autowired
     TbItemCatService tbItemCatService;
