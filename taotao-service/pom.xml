@@ -17,6 +17,10 @@
             <groupId>com.deservel.taotao</groupId>
             <artifactId>taotao-dao</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.deservel.taotao</groupId>
+            <artifactId>taotao-common</artifactId>
+        </dependency>
 
         <!-- 动态代理-->
         <dependency>
@@ -32,6 +36,21 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <!-- 时间操作组件 -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+
+        <!--log4j and slf4j-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
         </dependency>
     </dependencies>
 

@@ -9,6 +9,12 @@
     <import resource="application-context-dao.xml"/>
     <import resource="application-context-transaction.xml"/>
 
+    <!-- 读取配置文件-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="location" value="classpath:env.properties"/>
+    </bean>
+
     <!-- Annotation Config 注解驱动（）-->
     <context:annotation-config/>
 

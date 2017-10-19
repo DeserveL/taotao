@@ -34,6 +34,8 @@
         <jackson.version>2.9.2</jackson.version>
         <slf4j-log4j12.version>1.7.7</slf4j-log4j12.version>
         <aspectjweaver.version>1.8.8</aspectjweaver.version>
+        <commons-lang3.version>3.3.2</commons-lang3.version>
+        <joda-time.version>2.5</joda-time.version>
     </properties>
 
     <dependencyManagement>
@@ -219,6 +221,19 @@
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons.fileupload.version}</version>
+            </dependency>
+            <!-- Apache工具组件 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <!-- 时间操作组件 -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-time.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
