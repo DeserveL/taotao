@@ -17,12 +17,14 @@ package com.deservel.taotao.manage.controller;
 
 import com.deservel.taotao.common.model.EasyUIGridResultVO;
 import com.deservel.taotao.model.po.TbItem;
+import com.deservel.taotao.model.po.TbItemDesc;
 import com.deservel.taotao.service.TbItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,7 +55,28 @@ public class TbItemController {
         }
         Boolean flag = tbItemService.saveItem(tbItem, desc);
         if (flag) {
+            //201
             return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    /**
+     * 更新
+     *
+     * @param tbItem
+     * @param desc
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateItem(TbItem tbItem, String desc) {
+        if (StringUtils.isEmpty(tbItem.getId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        Boolean flag = tbItemService.updateItem(tbItem, desc);
+        if (flag) {
+            //204
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
@@ -69,5 +92,17 @@ public class TbItemController {
     public ResponseEntity<EasyUIGridResultVO> queryItemList(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "rows", defaultValue = "30") Integer rows) {
         EasyUIGridResultVO easyUIGridResultVO = tbItemService.queryItemList(page, rows);
         return ResponseEntity.ok(easyUIGridResultVO);
+    }
+
+    /**
+     * 获取商品描述
+     *
+     * @param id 商品ID
+     * @return
+     */
+    @RequestMapping(value = "desc/{id}", method = RequestMethod.GET)
+    public ResponseEntity<TbItemDesc> queryItemDesc(@PathVariable("id") Long id){
+        TbItemDesc tbItemDesc = tbItemService.queryItemDesc(id);
+        return ResponseEntity.ok(tbItemDesc);
     }
 }

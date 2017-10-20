@@ -15,14 +15,12 @@
  */
 package com.deservel.taotao.manage.controller;
 
+import com.deservel.taotao.model.po.TbItemCat;
 import com.deservel.taotao.model.vo.TbItemCatVO;
 import com.deservel.taotao.service.TbItemCatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,10 +38,29 @@ public class TbItemCatController {
     @Autowired
     TbItemCatService tbItemCatService;
 
+    /**
+     * 获取分类list
+     *
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "list", method = RequestMethod.GET)
     @ResponseBody
     public List<TbItemCatVO> queryItemCat(@RequestParam(value = "id", defaultValue = "0") Long id) {
         List<TbItemCatVO> tbItemCatVOs = tbItemCatService.queryItemCat(id);
         return tbItemCatVOs;
+    }
+
+    /**
+     * 获取单个分类详情
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public TbItemCat queryItemCatById(@PathVariable Long id) {
+        TbItemCat tbItemCat = tbItemCatService.queryItemCatById(id);
+        return tbItemCat;
     }
 }

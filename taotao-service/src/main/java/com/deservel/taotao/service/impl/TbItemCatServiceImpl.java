@@ -32,6 +32,12 @@ import java.util.List;
 @Service
 public class TbItemCatServiceImpl extends AbstractBaseService<TbItemCat> implements TbItemCatService{
 
+    /**
+     * 查询商品分类list
+     *
+     * @param parentId
+     * @return
+     */
     @Override
     public List<TbItemCatVO> queryItemCat(Long parentId) {
         //返回值
@@ -51,5 +57,16 @@ public class TbItemCatServiceImpl extends AbstractBaseService<TbItemCat> impleme
             }
         }
         return tbItemCatVOs;
+    }
+
+    /**
+     * 单个分类详情
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public TbItemCat queryItemCatById(Long id) {
+        return this.queryById(id);
     }
 }

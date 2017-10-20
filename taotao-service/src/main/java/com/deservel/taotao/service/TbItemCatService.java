@@ -30,11 +30,18 @@ import java.util.List;
 public interface TbItemCatService extends BaseService<TbItemCat>{
 
     /**
-     * 查询商品分类
+     * 查询商品分类list
      *
      * @param parentId
      * @return
      */
     List<TbItemCatVO> queryItemCat(Long parentId);
 
+    /**
+     * 单个分类详情
+     *
+     * @param id
+     * @return
+     */
+    TbItemCat queryItemCatById(Long id);
 }

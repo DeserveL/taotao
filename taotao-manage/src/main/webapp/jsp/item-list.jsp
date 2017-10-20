@@ -33,6 +33,12 @@
     }
     
     var toolbar = [{
+        text:'刷新',
+        iconCls:'icon-reload',
+        handler:function(){
+            $("#itemList").datagrid("reload");
+        }
+    },{
         text:'新增',
         iconCls:'icon-add',
         handler:function(){
@@ -58,8 +64,16 @@
         			var data = $("#itemList").datagrid("getSelections")[0];
         			data.priceView = TAOTAO.formatPrice(data.price);
         			$("#itemeEditForm").form("load",data);
-        			
-        			// 加载商品描述
+
+                    // 加载商品分类
+                    $.ajaxSettings.async = false; //同步
+                    var cidName = "";
+                    $.getJSON('/rest/item/cat/'+data.cid,function(_data){
+                        cidName = _data.name;
+                    });
+                    $.ajaxSettings.async = true; //异步
+
+                    // 加载商品描述
         			$.getJSON('/rest/item/desc/'+data.id,function(_data){
         				itemEditEditor.html(_data.itemDesc);
         			});
@@ -95,6 +109,7 @@
         			TAOTAO.init({
         				"pics" : data.image,
         				"cid" : data.cid,
+                        "cidName" : cidName,
         				fun:function(node){
         					TAOTAO.changeItemParam(node, "itemeEditForm");
         				}

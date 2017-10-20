@@ -2,6 +2,7 @@ package com.deservel.taotao.service;
 
 import com.deservel.taotao.common.model.EasyUIGridResultVO;
 import com.deservel.taotao.model.po.TbItem;
+import com.deservel.taotao.model.po.TbItemDesc;
 
 /**
  * 商品类
@@ -22,6 +23,15 @@ public interface TbItemService extends BaseService<TbItem>{
     Boolean saveItem(TbItem tbItem, String desc);
 
     /**
+     * 更新商品
+     *
+     * @param tbItem
+     * @param desc
+     * @return
+     */
+    Boolean updateItem(TbItem tbItem, String desc);
+
+    /**
      * 查询商品
      *
      * @param page
@@ -29,4 +39,12 @@ public interface TbItemService extends BaseService<TbItem>{
      * @return
      */
     EasyUIGridResultVO queryItemList(Integer page, Integer rows);
+
+    /**
+     * 查询商品描述
+     *
+     * @param id
+     * @return
+     */
+    TbItemDesc queryItemDesc(Long id);
 }

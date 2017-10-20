@@ -67,6 +67,31 @@ public class TbItemServiceImpl extends AbstractBaseService<TbItem> implements Tb
     }
 
     /**
+     * 更新商品
+     *
+     * @param tbItem
+     * @param desc
+     * @return
+     */
+    @Override
+    public Boolean updateItem(TbItem tbItem, String desc) {
+        tbItem.setStatus(null);
+        tbItem.setUpdated(null);
+        tbItem.setCreated(null);
+        Integer update = this.updateSelective(tbItem);
+        if (update > 0) {
+            TbItemDesc tbItemDesc = new TbItemDesc();
+            tbItemDesc.setItemId(tbItem.getId());
+            tbItemDesc.setItemDesc(desc);
+            Integer updateDesc = tbItemDescService.updateSelective(tbItemDesc);
+            if (updateDesc > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * 查询商品
      *
      * @param page
@@ -76,7 +101,19 @@ public class TbItemServiceImpl extends AbstractBaseService<TbItem> implements Tb
     @Override
     public EasyUIGridResultVO queryItemList(Integer page, Integer rows) {
         Example example = new Example(TbItem.class);
+        example.setOrderByClause("updated DESC");
         PageInfo<TbItem> tbItemPageInfo = this.queryPageListByExample(page, rows, example);
         return new EasyUIGridResultVO(tbItemPageInfo.getTotal(), tbItemPageInfo.getList());
+    }
+
+    /**
+     * 查询商品描述
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public TbItemDesc queryItemDesc(Long id) {
+        return tbItemDescService.queryById(id);
     }
 }
