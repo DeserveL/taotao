@@ -15,13 +15,17 @@
  */
 package com.deservel.taotao.service.impl;
 
+import com.deservel.taotao.common.model.EasyUIGridResultVO;
 import com.deservel.taotao.model.po.TbItem;
 import com.deservel.taotao.model.po.TbItemDesc;
 import com.deservel.taotao.service.AbstractBaseService;
 import com.deservel.taotao.service.TbItemDescService;
 import com.deservel.taotao.service.TbItemService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * 商品
@@ -44,7 +48,7 @@ public class TbItemServiceImpl extends AbstractBaseService<TbItem> implements Tb
      * @return
      */
     @Override
-    public Boolean saveItem(TbItem tbItem, String desc){
+    public Boolean saveItem(TbItem tbItem, String desc) {
         tbItem.setId(null);
         tbItem.setStatus((byte) 1);
         tbItem.setUpdated(null);
@@ -60,5 +64,19 @@ public class TbItemServiceImpl extends AbstractBaseService<TbItem> implements Tb
             }
         }
         return false;
+    }
+
+    /**
+     * 查询商品
+     *
+     * @param page
+     * @param rows
+     * @return
+     */
+    @Override
+    public EasyUIGridResultVO queryItemList(Integer page, Integer rows) {
+        Example example = new Example(TbItem.class);
+        PageInfo<TbItem> tbItemPageInfo = this.queryPageListByExample(page, rows, example);
+        return new EasyUIGridResultVO(tbItemPageInfo.getTotal(), tbItemPageInfo.getList());
     }
 }

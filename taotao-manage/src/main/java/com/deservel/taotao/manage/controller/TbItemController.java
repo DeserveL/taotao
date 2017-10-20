@@ -15,6 +15,7 @@
  */
 package com.deservel.taotao.manage.controller;
 
+import com.deservel.taotao.common.model.EasyUIGridResultVO;
 import com.deservel.taotao.model.po.TbItem;
 import com.deservel.taotao.service.TbItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author DeserveL
@@ -37,6 +39,13 @@ public class TbItemController {
     @Autowired
     TbItemService tbItemService;
 
+    /**
+     * 新增商品
+     *
+     * @param tbItem
+     * @param desc
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> saveItem(TbItem tbItem, String desc) {
         if (StringUtils.isEmpty(tbItem.getTitle())) {
@@ -47,5 +56,18 @@ public class TbItemController {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    /**
+     * 查询商品
+     *
+     * @param page
+     * @param rows
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<EasyUIGridResultVO> queryItemList(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "rows", defaultValue = "30") Integer rows) {
+        EasyUIGridResultVO easyUIGridResultVO = tbItemService.queryItemList(page, rows);
+        return ResponseEntity.ok(easyUIGridResultVO);
     }
 }

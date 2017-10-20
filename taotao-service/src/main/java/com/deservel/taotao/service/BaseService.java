@@ -1,6 +1,7 @@
 package com.deservel.taotao.service;
 
 import com.github.pagehelper.PageInfo;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public interface BaseService<T> {
     List<T> queryListByWhere(T record);
 
     /**
-     * 分页查询
+     * 根据条件分页查询
      *
      * @param page
      * @param rows
@@ -54,6 +55,24 @@ public interface BaseService<T> {
      * @return
      */
     PageInfo<T> queryPageListByWhere(Integer page, Integer rows, T record);
+
+    /**
+     * 根据example条件查询数据列表
+     *
+     * @param example
+     * @return
+     */
+    List<T> queryListByExample(Example example);
+
+    /**
+     * 根据example条件分页查询
+     *
+     * @param page
+     * @param rows
+     * @param example
+     * @return
+     */
+    PageInfo<T> queryPageListByExample(Integer page, Integer rows, Example example);
 
     /**
      * 新增数据，返回成功的条数

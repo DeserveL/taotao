@@ -106,6 +106,33 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
     }
 
     /**
+     * 根据example条件查询数据列表
+     *
+     * @param example
+     * @return
+     */
+    @Override
+    public List<T> queryListByExample(Example example) {
+        return mapper.selectByExample(example);
+    }
+
+    /**
+     * 根据example条件分页查询
+     *
+     * @param page
+     * @param rows
+     * @param example
+     * @return
+     */
+    @Override
+    public PageInfo<T> queryPageListByExample(Integer page, Integer rows, Example example) {
+        // 设置分页条件
+        PageHelper.startPage(page, rows);
+        List<T> list = this.queryListByExample(example);
+        return new PageInfo<>(list);
+    }
+
+    /**
      * 新增数据，返回成功的条数
      *
      * @param record

@@ -47,23 +47,23 @@ public class PicUploadServiceImpl implements PicUploadService {
     /**
      * 图片后缀分隔符
      */
-    @Value("${IMAGE_SEPARATOR}")
-    private String IMAGE_SEPARATOR;
+    @Value("${image.separator}")
+    private String imageSeparator;
     /**
      * 图片后缀
      */
-    @Value("${IMAGE_TYPE}")
-    private String IMAGE_TYPE;
+    @Value("${image.type}")
+    private String imageType;
     /**
      * 图片服务器
      */
-    @Value("${IMAGE_SERVER}")
-    private String IMAGE_SERVER;
+    @Value("${image.server}")
+    private String imageServer;
     /**
      * 图片存放路径
      */
-    @Value("${IMAGE_LOCATION}")
-    private String IMAGE_LOCATION;
+    @Value("${image.location}")
+    private String imageLocation;
 
     /**
      * 图片上传
@@ -84,7 +84,7 @@ public class PicUploadServiceImpl implements PicUploadService {
         //文件相对路径
         String filePath = getFilePath(uploadFile.getOriginalFilename());
         //文件新路径
-        String allFilePath = IMAGE_LOCATION + filePath;
+        String allFilePath = imageLocation + filePath;
         //日志打印
         if (log.isDebugEnabled()) {
             log.debug("Pic file upload .[{}] to [{}] .", uploadFile.getOriginalFilename(), allFilePath);
@@ -118,7 +118,7 @@ public class PicUploadServiceImpl implements PicUploadService {
 
         // 生成图片的绝对引用地址
         String picUrl = StringUtils.replace(filePath,"\\", "/");
-        picUploadResultVO.setUrl(IMAGE_SERVER + picUrl);
+        picUploadResultVO.setUrl(imageServer + picUrl);
         picUploadResultVO.setError(0);
 
         return picUploadResultVO;
@@ -131,8 +131,8 @@ public class PicUploadServiceImpl implements PicUploadService {
      * @return
      */
     public boolean checkPictureSuffix(String imageName) {
-        if (null != imageName & null != IMAGE_TYPE) {
-            String[] type = IMAGE_TYPE.split(IMAGE_SEPARATOR);
+        if (null != imageName & null != imageType) {
+            String[] type = imageType.split(imageSeparator);
             for (String s : type) {
                 if (StringUtils.endsWithIgnoreCase(imageName, s)) {
                     return true;
@@ -156,7 +156,7 @@ public class PicUploadServiceImpl implements PicUploadService {
         String fileFolder = baseFolder + File.separator + new DateTime(nowDate).toString("yyyy")
                 + File.separator + new DateTime(nowDate).toString("MM") + File.separator
                 + new DateTime(nowDate).toString("dd");
-        File file = new File(IMAGE_LOCATION + fileFolder);
+        File file = new File(imageLocation + fileFolder);
         if (!file.isDirectory()) {
             // 如果目录不存在，则创建目录
             file.mkdirs();
