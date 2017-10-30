@@ -18,10 +18,11 @@ package com.deservel.taotao.service.impl;
 import com.deservel.taotao.common.model.EasyUIGridResultVO;
 import com.deservel.taotao.model.po.TbItem;
 import com.deservel.taotao.model.po.TbItemDesc;
+import com.deservel.taotao.model.po.TbItemParamItem;
 import com.deservel.taotao.service.AbstractBaseService;
 import com.deservel.taotao.service.TbItemDescService;
+import com.deservel.taotao.service.TbItemParamItemService;
 import com.deservel.taotao.service.TbItemService;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,26 +41,38 @@ public class TbItemServiceImpl extends AbstractBaseService<TbItem> implements Tb
     @Autowired
     TbItemDescService tbItemDescService;
 
+    @Autowired
+    TbItemParamItemService tbItemParamItemService;
+
     /***
      * 保存商品描述(支持事务)
      *
      * @param tbItem
      * @param desc
+     * @param itemParams
      * @return
      */
     @Override
-    public Boolean saveItem(TbItem tbItem, String desc) {
+    public Boolean saveItem(TbItem tbItem, String desc, String itemParams) {
         tbItem.setId(null);
         tbItem.setStatus((byte) 1);
         tbItem.setUpdated(null);
         tbItem.setCreated(null);
         Integer save = this.save(tbItem);
         if (save > 0) {
+            //商品分类
             TbItemDesc tbItemDesc = new TbItemDesc();
             tbItemDesc.setItemId(tbItem.getId());
             tbItemDesc.setItemDesc(desc);
             Integer saveDesc = tbItemDescService.save(tbItemDesc);
-            if (saveDesc > 0) {
+
+            //商品规格
+            TbItemParamItem tbItemParamItem = new TbItemParamItem();
+            tbItemParamItem.setItemId(tbItem.getId());
+            tbItemParamItem.setParamData(itemParams);
+            Integer saveParam = tbItemParamItemService.save(tbItemParamItem);
+
+            if (saveDesc > 0 && saveParam > 0) {
                 return true;
             }
         }
@@ -71,20 +84,29 @@ public class TbItemServiceImpl extends AbstractBaseService<TbItem> implements Tb
      *
      * @param tbItem
      * @param desc
+     * @param itemParams
      * @return
      */
     @Override
-    public Boolean updateItem(TbItem tbItem, String desc) {
+    public Boolean updateItem(TbItem tbItem, String desc, String itemParams) {
         tbItem.setStatus(null);
         tbItem.setUpdated(null);
         tbItem.setCreated(null);
-        Integer update = this.updateSelective(tbItem);
+        Integer update = this.updateByPrimaryKeySelective(tbItem);
         if (update > 0) {
+            //更新分类信息
             TbItemDesc tbItemDesc = new TbItemDesc();
             tbItemDesc.setItemId(tbItem.getId());
             tbItemDesc.setItemDesc(desc);
-            Integer updateDesc = tbItemDescService.updateSelective(tbItemDesc);
-            if (updateDesc > 0) {
+            Integer updateDesc = tbItemDescService.updateByPrimaryKeySelective(tbItemDesc);
+
+            //更新商品规格
+            TbItemParamItem tbItemParamItem = new TbItemParamItem();
+            tbItemParamItem.setParamData(itemParams);
+            Example example = new Example(TbItemParamItem.class);
+            example.createCriteria().andEqualTo("itemId", tbItem.getId());
+            Integer updateParamItem = tbItemParamItemService.updateByExampleSelective(tbItemParamItem, example);
+            if (updateDesc > 0 && updateParamItem > 0) {
                 return true;
             }
         }

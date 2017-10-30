@@ -46,14 +46,15 @@ public class TbItemController {
      *
      * @param tbItem
      * @param desc
+     * @param itemParams
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> saveItem(TbItem tbItem, String desc) {
+    public ResponseEntity<Void> saveItem(TbItem tbItem, String desc, String itemParams) {
         if (StringUtils.isEmpty(tbItem.getTitle())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        Boolean flag = tbItemService.saveItem(tbItem, desc);
+        Boolean flag = tbItemService.saveItem(tbItem, desc, itemParams);
         if (flag) {
             //201
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -66,14 +67,15 @@ public class TbItemController {
      *
      * @param tbItem
      * @param desc
+     * @param itemParams
      * @return
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<Void> updateItem(TbItem tbItem, String desc) {
+    public ResponseEntity<Void> updateItem(TbItem tbItem, String desc, String itemParams) {
         if (StringUtils.isEmpty(tbItem.getId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        Boolean flag = tbItemService.updateItem(tbItem, desc);
+        Boolean flag = tbItemService.updateItem(tbItem, desc, itemParams);
         if (flag) {
             //204
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

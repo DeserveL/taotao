@@ -91,20 +91,38 @@ public interface BaseService<T> {
     Integer saveSelective(T record);
 
     /**
-     * 修改数据，返回成功的条数
+     * 根据主键修改数据，返回成功的条数
      *
      * @param record
      * @return
      */
-    Integer update(T record);
+    Integer updateByPrimaryKey(T record);
 
     /**
-     * 修改数据，使用不为null的字段，返回成功的条数
+     * 根据主键修改数据，使用不为null的字段，返回成功的条数
      *
      * @param record
      * @return
      */
-    Integer updateSelective(T record);
+    Integer updateByPrimaryKeySelective(T record);
+
+    /**
+     * 根据条件修改数据，返回成功的条数
+     *
+     * @param record
+     * @param example
+     * @return
+     */
+    Integer updateByExample(T record, Example example);
+
+    /**
+     * 根据条件修改数据，使用不为null的字段，返回成功的条数
+     *
+     * @param record
+     * @param example
+     * @return
+     */
+    Integer updateByExampleSelective(T record, Example example);
 
     /**
      * 根据id删除数据

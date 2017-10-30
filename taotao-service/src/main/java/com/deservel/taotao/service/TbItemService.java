@@ -18,18 +18,20 @@ public interface TbItemService extends BaseService<TbItem>{
      *
      * @param tbItem
      * @param desc
+     * @param itemParams
      * @return
      */
-    Boolean saveItem(TbItem tbItem, String desc);
+    Boolean saveItem(TbItem tbItem, String desc, String itemParams);
 
     /**
      * 更新商品
      *
      * @param tbItem
      * @param desc
+     * @param itemParams
      * @return
      */
-    Boolean updateItem(TbItem tbItem, String desc);
+    Boolean updateItem(TbItem tbItem, String desc, String itemParams);
 
     /**
      * 查询商品

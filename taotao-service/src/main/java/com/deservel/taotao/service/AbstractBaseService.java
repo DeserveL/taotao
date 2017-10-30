@@ -155,25 +155,49 @@ public abstract class AbstractBaseService<T> implements BaseService<T> {
     }
 
     /**
-     * 修改数据，返回成功的条数
+     * 根据主键修改数据，返回成功的条数
      *
      * @param record
      * @return
      */
     @Override
-    public Integer update(T record) {
+    public Integer updateByPrimaryKey(T record) {
         return this.mapper.updateByPrimaryKey(record);
     }
 
     /**
-     * 修改数据，使用不为null的字段，返回成功的条数
+     * 根据主键修改数据，使用不为null的字段，返回成功的条数
      *
      * @param record
      * @return
      */
     @Override
-    public Integer updateSelective(T record) {
+    public Integer updateByPrimaryKeySelective(T record) {
         return this.mapper.updateByPrimaryKeySelective(record);
+    }
+
+    /**
+     * 根据条件修改数据，返回成功的条数
+     *
+     * @param record
+     * @param example
+     * @return
+     */
+    @Override
+    public Integer updateByExample(T record, Example example) {
+        return this.mapper.updateByExample(record, example);
+    }
+
+    /**
+     * 根据条件修改数据，使用不为null的字段，返回成功的条数
+     *
+     * @param record
+     * @param example
+     * @return
+     */
+    @Override
+    public Integer updateByExampleSelective(T record, Example example) {
+        return this.mapper.updateByExampleSelective(record, example);
     }
 
     /**

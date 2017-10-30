@@ -79,14 +79,14 @@
         			});
         			
         			//加载商品规格
-        			$.getJSON('/rest/item/param/item/query/'+data.id,function(_data){
-        				if(_data && _data.status == 200 && _data.data && _data.data.paramData){
+        			$.getJSON('/rest/item/param/item/'+data.id,function(_data){
+        				if(_data.paramData){
         					$("#itemeEditForm .params").show();
-        					$("#itemeEditForm [name=itemParams]").val(_data.data.paramData);
-        					$("#itemeEditForm [name=itemParamId]").val(_data.data.id);
+        					$("#itemeEditForm [name=itemParams]").val(_data.paramData);
+        					$("#itemeEditForm [name=itemParamId]").val(_data.id);
         					
         					//回显商品规格
-        					 var paramData = JSON.parse(_data.data.paramData);
+        					 var paramData = JSON.parse(_data.paramData);
         					
         					 var html = "<ul>";
         					 for(var i in paramData){
