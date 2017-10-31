@@ -16,6 +16,7 @@
 package com.deservel.taotao.service;
 
 import com.deservel.taotao.model.po.TbItemCat;
+import com.deservel.taotao.model.vo.ItemCatResultVO;
 import com.deservel.taotao.model.vo.TbItemCatVO;
 
 import java.util.List;
@@ -44,4 +45,11 @@ public interface TbItemCatService extends BaseService<TbItemCat>{
      * @return
      */
     TbItemCat queryItemCatById(Long id);
+
+    /**
+     * 商品分类tree
+     *
+     * @return
+     */
+    ItemCatResultVO queryItemCatTree();
 }
