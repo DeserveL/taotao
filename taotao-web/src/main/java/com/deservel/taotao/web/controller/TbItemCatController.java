@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author DeserveL
@@ -41,9 +42,10 @@ public class TbItemCatController {
      * @return
      */
     @RequestMapping(value = "tree", method = RequestMethod.GET)
-    public ResponseEntity<ItemCatResultVO> queryItemCatTree(){
+    @ResponseBody
+    public ItemCatResultVO queryItemCatTree(){
         ItemCatResultVO itemCatResultVO = tbItemCatService.queryItemCatTree();
-        return ResponseEntity.ok(itemCatResultVO);
+        return itemCatResultVO;
     }
 
 }

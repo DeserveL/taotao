@@ -38,6 +38,7 @@
         <slf4j-log4j12.version>1.7.7</slf4j-log4j12.version>
         <aspectjweaver.version>1.8.8</aspectjweaver.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
+        <commons-io.version>2.4</commons-io.version>
         <joda-time.version>2.5</joda-time.version>
     </properties>
 
@@ -247,6 +248,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
 
             <!-- 时间操作组件 -->

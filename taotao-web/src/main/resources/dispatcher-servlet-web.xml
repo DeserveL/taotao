@@ -9,7 +9,16 @@
 
     <context:component-scan base-package="com.deservel.taotao.web.controller"/>
 
-    <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:annotation-driven>
+        <!-- 采用自定义方案 -->
+        <mvc:message-converters register-defaults="true">
+            <!-- 定义json转化器，支持json跨域 -->
+            <bean class="com.deservel.taotao.common.spring.extend.converter.json.CallbackMappingJackson2HttpMessageConverter">
+                <!-- 跨域请求中的请求参数名 -->
+                <property name="callbackName" value="callback"></property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
