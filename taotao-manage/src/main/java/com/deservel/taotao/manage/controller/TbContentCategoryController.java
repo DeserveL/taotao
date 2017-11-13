@@ -15,9 +15,11 @@
  */
 package com.deservel.taotao.manage.controller;
 
+import com.deservel.taotao.model.po.TbContentCategory;
 import com.deservel.taotao.model.vo.TbContentCategoryVO;
 import com.deservel.taotao.service.TbContentCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +41,7 @@ public class TbContentCategoryController {
     TbContentCategoryService tbContentCategoryService;
 
     /**
-     * 查询内容列表
+     * 查询分类内容树
      *
      * @param parentId
      * @return
@@ -48,5 +50,45 @@ public class TbContentCategoryController {
     public ResponseEntity<List<TbContentCategoryVO>> queryContentCategoryList(@RequestParam(value = "id", defaultValue = "0") Long parentId) {
         List<TbContentCategoryVO> tbContentCategoryVOs = tbContentCategoryService.queryContentCategoryList(parentId);
         return ResponseEntity.ok(tbContentCategoryVOs);
+    }
+
+    /**
+     * 保存树节点
+     *
+     * @param tbContentCategory
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<TbContentCategory> saveContentCategoryList(TbContentCategory tbContentCategory) {
+        TbContentCategory tbContentCategoryRs = tbContentCategoryService.saveContentCategoryList(tbContentCategory);
+        return ResponseEntity.ok(tbContentCategoryRs);
+    }
+
+    /**
+     * 修改节点名字
+     *
+     * @param tbContentCategory
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateName(TbContentCategory tbContentCategory) {
+        if(tbContentCategoryService.updateName(tbContentCategory)){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    /**
+     * 删除节点
+     *
+     * @param tbContentCategory
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteNode(TbContentCategory tbContentCategory) {
+        if(tbContentCategoryService.deleteNode(tbContentCategory)){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 }

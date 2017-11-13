@@ -19,4 +19,28 @@ public interface TbContentCategoryService extends BaseService<TbContentCategory>
      * @return
      */
     List<TbContentCategoryVO> queryContentCategoryList(Long parentId);
+
+    /**
+     * 保存树节点
+     *
+     * @param tbContentCategory
+     * @return
+     */
+    TbContentCategory saveContentCategoryList(TbContentCategory tbContentCategory);
+
+    /**
+     * 修改节点名字
+     *
+     * @param tbContentCategory
+     * @return
+     */
+    boolean updateName(TbContentCategory tbContentCategory);
+
+    /**
+     * 删除节点
+     *
+     * @param tbContentCategory
+     * @return
+     */
+    boolean deleteNode(TbContentCategory tbContentCategory);
 }

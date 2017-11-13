@@ -57,4 +57,95 @@ public class TbContentCategoryServiceImpl extends AbstractBaseService<TbContentC
         }
         return tbContentCategoryVOs;
     }
+
+    /**
+     * 保存树节点
+     *
+     * @param tbContentCategory
+     * @return
+     */
+    @Override
+    public TbContentCategory saveContentCategoryList(TbContentCategory tbContentCategory) {
+        tbContentCategory.setId(null);
+        tbContentCategory.setIsParent(false);
+        tbContentCategory.setSortOrder(1);
+        tbContentCategory.setStatus(1);
+        super.save(tbContentCategory);
+
+        //查询父节点是否有子节点 没有 则改状态
+        TbContentCategory tbContentCategoryParent = super.queryById(tbContentCategory.getParentId());
+        if (!tbContentCategoryParent.getIsParent()) {
+            tbContentCategoryParent.setIsParent(true);
+            super.updateByPrimaryKeySelective(tbContentCategoryParent);
+        }
+
+        return tbContentCategory;
+    }
+
+    /**
+     * 修改节点名字
+     *
+     * @param tbContentCategory
+     * @return
+     */
+    @Override
+    public boolean updateName(TbContentCategory tbContentCategory) {
+        Integer integer = super.updateByPrimaryKeySelective(tbContentCategory);
+        if (integer > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 删除子节点全部
+     *
+     * @param tbContentCategory
+     * @return
+     */
+    @Override
+    public boolean deleteNode(TbContentCategory tbContentCategory) {
+        ArrayList<Object> ids = new ArrayList<>();
+        ids.add(tbContentCategory.getId());
+
+        // 递归查找该节点下的所有子节点id
+        this.findAllSubNode(ids, tbContentCategory.getId());
+
+        // 删除所有节点
+        super.deleteByIds("id", ids);
+
+        // 判断该节点是否还有兄弟节点，如果没有，修改父节点的isParent为false
+        TbContentCategory record = new TbContentCategory();
+        record.setParentId(tbContentCategory.getParentId());
+        List<TbContentCategory> list = super.queryListByWhere(record);
+        if (null == list || list.isEmpty()) {
+            TbContentCategory parent = new TbContentCategory();
+            parent.setId(tbContentCategory.getParentId());
+            parent.setIsParent(false);
+            super.updateByPrimaryKeySelective(parent);
+        }
+
+        return true;
+    }
+
+    /**
+     * 查找该节点下的所有子节点
+     *
+     * @param ids
+     * @param pid
+     */
+    private void findAllSubNode(List<Object> ids, Long pid) {
+        TbContentCategory record = new TbContentCategory();
+        record.setParentId(pid);
+        List<TbContentCategory> list = super.queryListByWhere(record);
+        for (TbContentCategory contentCategory : list) {
+            ids.add(contentCategory.getId());
+            // 判断该节点是否为父节点，如果是，继续调用该方法查找子节点
+            if (contentCategory.getIsParent()) {
+                // 开始递归
+                findAllSubNode(ids, contentCategory.getId());
+            }
+        }
+    }
+
 }
