@@ -9,6 +9,7 @@
     <import resource="application-context-dao.xml"/>
     <import resource="application-context-transaction.xml"/>
     <import resource="application-context-redis.xml"/>
+    <import resource="application-context-httpclient.xml"/>
 
     <!-- 读取配置文件-->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
